@@ -3,9 +3,16 @@ import pygame
 pygame.init()
 
 #تنظیمات صفحه اصلی
-width=800
-height=800
-CellSize=width//10
+
+info = pygame.display.Info()
+screen_width = info.current_w
+screen_height = info.current_h
+
+
+CellSize = min(screen_width, screen_height-70) // 10
+width = CellSize * 10
+height = CellSize * 10
+
 
 #رنگ ها
 white=(255, 255, 255)
@@ -14,7 +21,8 @@ yellow=(247, 246, 178)
 red=(247, 178, 178)
 
 #صفحه و فونت
-board=pygame.display.set_mode((width,height))
+board = pygame.display.set_mode((width, height))
+
 cap=pygame.display.set_caption("snakes and ladders")
 font=pygame.font.SysFont("arial",12)
 
@@ -22,21 +30,23 @@ font=pygame.font.SysFont("arial",12)
 def draw_board():
     for row in range(10):
         for col in range(10):
-            if row %2==0:
+            RealRow=9-row
+            if RealRow %2==0:
                 RealCol=col
             else:
                 RealCol=9-col
+
             #شماره خانه
             CellNum=row*10+RealCol+1  
         
             
             #مختصات هر خانه
             x=col*CellSize
-            y=row*CellSize
+            y=RealRow*CellSize
 
             
 
-            if (row+col)%2==0:
+            if (RealRow+col)%2==0:
                 color=yellow
             else:
                 color=red
